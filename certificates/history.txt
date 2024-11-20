@@ -1,0 +1,3 @@
+openssl req -new -out sslcert.csr -nodes -days 1100 -keyout private.key -config san.cnf
+openssl pkcs12 -export -out certificate.pfx -inkey private.key -in certnew.cer -certfile intermediate.cer 
+openssl pkcs12 -info -in certificate.p12 -nodes

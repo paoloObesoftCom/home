@@ -1,0 +1,42 @@
+# OpenSSL configuration file for creating a CSR for a server certificate
+# Adapt at least the FQDN and ORGNAME lines, and then run 
+# openssl req -new -config myserver.cnf -keyout myserver.key -out myserver.csr
+# on the command line.
+
+# the fully qualified server (or service) name
+FQDN = iview.obesoft.com
+
+# the name of your organization
+# (see also https://www.switch.ch/pki/participants/)
+ORGNAME = ObeSoft
+
+# subjectAltName entries: to add DNS aliases to the CSR, delete
+# the '#' character in the ALTNAMES line, and change the subsequent
+# 'DNS:' entries accordingly. Please note: all DNS names must
+# resolve to the same IP address as the FQDN.
+#ALTNAMES = DNS:$FQDN, DNS:$FQDN1, DNS:$FQDN2, DNS:$HOST, DNS:$HOST1, DNS:$HOST2, IP:$IP, DNS:$IP   # , DNS:bar.example.org , DNS:www.foo.example.org
+#ALTNAMES = DNS:$FQDN,DNS:$FQDN1, IP:$IP, DNS:$HOST, DNS:$IP
+
+# --- no modifications required below ---
+[ req ]
+default_bits = 2048
+default_md = sha256
+prompt = no
+encrypt_key = no
+distinguished_name = dn
+req_extensions = req_ext
+
+[ dn ]
+C = CH
+L = S.Antonino
+O = $ORGNAME
+CN = $FQDN
+OU = IT
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = iview.obesoft.com
+DNS.2 = iview
+IP.1 = 192.168.1.131
